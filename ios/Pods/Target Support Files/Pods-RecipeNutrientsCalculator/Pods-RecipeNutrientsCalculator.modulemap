@@ -1,0 +1,6 @@
+module Pods_RecipeNutrientsCalculator {
+  umbrella header "Pods-RecipeNutrientsCalculator-umbrella.h"
+
+  export *
+  module * { export * }
+}
