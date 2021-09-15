@@ -5,7 +5,6 @@ import { Alert } from 'react-native';
 import {Fetch} from '../routes';
 
 const XMLHttpRequest = require("xhr2");
-const url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que';
 
 
 class Scan extends Component {
