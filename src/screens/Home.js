@@ -9,9 +9,9 @@ const Home = ({navigation}) => {
             <TouchableOpacity onPress = { () => navigation.navigate('Recipes')}>
                 <Text>Your Recipes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress = { () => navigation.navigate('Scan')}>
+            {/* <TouchableOpacity onPress = { () => navigation.navigate('Scan')}>
                 <Text>Scan Barcode</Text>
-            </TouchableOpacity>      
+            </TouchableOpacity>       */}
             <Button title= 'Sign out' onPress = { () => Auth.signOut()}/>
 
         </View>

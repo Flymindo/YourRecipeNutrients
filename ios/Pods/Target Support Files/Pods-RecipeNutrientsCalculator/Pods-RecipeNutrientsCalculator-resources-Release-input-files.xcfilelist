@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-RecipeNutrientsCalculator/Pods-RecipeNutrientsCalculator-resources.sh
 ${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle

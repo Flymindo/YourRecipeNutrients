@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Button, Text, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Alert } from 'react-native';
-import {Fetch} from '../routes';
-
-const XMLHttpRequest = require("xhr2");
 
 
 class Scan extends Component {
@@ -12,6 +9,8 @@ class Scan extends Component {
   constructor(props) {
     super(props);
     this.camera = null;
+    this.recipeName = this.props.route.params.recipeName;
+    this.recipeTotalCalory = this.props.route.params.recipeTotalCalory
     // this.barcodeCodes = [];
     this.barcodeCode = "";
 
@@ -32,8 +31,8 @@ class Scan extends Component {
       if (this.barcodeCode != scanResult.data) {
         this.barcodeCode = scanResult.data;
 
-        console.log("this is barcodeCode")
-        console.log(this.barcodeCode)
+        // console.log("this is barcodeCode")
+        // console.log(this.barcodeCode)
         Alert.alert('The barcode is scanned. Please press the button "Enter Barcode');
 
         
@@ -89,9 +88,10 @@ class Scan extends Component {
 	<View style={[styles.overlay, styles.bottomOverlay]}>
           <Button
             onPress={() => {
-              
               this.props.navigation.navigate('AddFood',{
-                barcode : this.barcodeCode
+                barcode : this.barcodeCode,
+                recipeName: this.recipeName,
+                recipeTotalCalory: this.recipeTotalCalory
               });
               }}
             style={styles.enterBarcodeManualButton}
