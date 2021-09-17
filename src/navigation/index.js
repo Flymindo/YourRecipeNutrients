@@ -19,6 +19,7 @@ const AppContainer =  () =>  {
     // Handle user state changes
     function onAuthStateChanged(user) {
       setUser(user);
+      console.log(user);
       if (initializing) setInitializing(false);
     }
   

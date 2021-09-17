@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import {Auth} from '../service';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
@@ -7,11 +7,9 @@ import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 const Login = ({navigation}) => {
     return(
         <View style = {styles.login}>
-            {/* <TouchableOpacity onPress = { () => navigation.navigate('Home')}>
-                <Text>Login</Text>
-            </TouchableOpacity>   */}
+            <Image style = {styles.logo} source={require('../components/Logo.png')} />
             <GoogleSigninButton
-            style={{ width: 192, height: 48 }}
+            style={styles.signIn}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={() => Auth.googleLogin().then(() => console.log('Signed in with Google!'))}
@@ -23,9 +21,24 @@ const Login = ({navigation}) => {
 
 const styles = StyleSheet.create({
     login:{
-        flex:1,
+        display: 'flex',
+        flexDirection:'column',
+        padding: 30,
+        backgroundColor:'#87CEFA',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    logo:{
+        display:'flex',
+        alignItems: 'center',
+        alignContent: 'center'
+    },
+    signIn: {
+        width: 192, 
+        height: 48,
+        marginTop: 10,
+        borderRadius: 20,
     }
 })
 

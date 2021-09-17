@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 
-const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que';
+const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key={YOUR_API_KEY}';
 
 class AddFood extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class AddFood extends Component {
         this.barcodeCode = this.props.route.params.barcode;
         this.recipeName = this.props.route.params.recipeName;
         this.recipeTotalCalory = this.props.route.params.recipeTotalCalory;
+        // this.isMountedVal = 0;
 
         this.state = {
           isLoading: true,
@@ -46,6 +47,7 @@ class AddFood extends Component {
 
 
     componentDidMount(){
+
         fetch(post_url, {
             method: 'POST',
             headers: {
@@ -62,7 +64,15 @@ class AddFood extends Component {
                 fdcId: responsejson.foods[0].fdcId
             })
             
-            this.getServingSize().then( response => {
+            // this.getServingSize().then( response => {
+            //     this.setState({
+            //         servingSize: response.servingSize,
+            //         servingCalory: response.labelNutrients.calories.value
+            //     })
+            // })
+            fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
+            .then( response => response.json())
+            .then( response => {
                 this.setState({
                     servingSize: response.servingSize,
                     servingCalory: response.labelNutrients.calories.value
@@ -70,17 +80,16 @@ class AddFood extends Component {
             })
 
         })
-
-
     }
 
-    getServingSize () {
-        return (
-            // fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
-            fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que')
-            .then( response => response.json())
-        )
-    }
+
+    // getServingSize () {
+    //     return (
+    //         // fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
+    //         fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que')
+    //         .then( response => response.json())
+    //     )
+    // }
     
 
     render() {

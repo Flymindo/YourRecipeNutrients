@@ -12,7 +12,23 @@ class Foods extends Component {
         super(props);
         this.parentName = this.props.route.params.recipeName;
         this.recipeTotalCalory = this.props.route.params.totalCalory;
-        this.data = 
+        this.isMountedVal = 0;
+    //     this.data = 
+    //     firestore()
+    //     .collection('Recipes')
+    //     .doc(this.parentName)
+    //     .collection('Foods')
+    //     .onSnapshot(querySnapshot => {
+    //         let foods = [];
+    //         querySnapshot.forEach(documentSnapshot => {
+    //           foods.push( documentSnapshot.data() )
+    //         })
+    //         this.setState({foods});
+    //   })
+    }
+
+    componentDidMount(){
+        this.isMountedVal = 1;
         firestore()
         .collection('Recipes')
         .doc(this.parentName)
@@ -22,8 +38,12 @@ class Foods extends Component {
             querySnapshot.forEach(documentSnapshot => {
               foods.push( documentSnapshot.data() )
             })
-            this.setState({foods});
+            if(this.isMountedVal)
+                this.setState({foods});
       })
+    }
+    componentWillUnmount(){
+        this.isMountedVal = 0;
     }
     
     render() {
@@ -35,8 +55,8 @@ class Foods extends Component {
                 {this.state.foods.map( (food, index) => 
                 <View style= {styles.scroll} key={index}> 
                     <TouchableOpacity>
-                        <Text>{food.Name}</Text>
-                        <Text>Calory is {food.Calory} KCAL</Text>
+                        <Text style = {styles.name}>{food.Name}</Text>
+                        <Text style = {styles.text}>Calory is {food.Calory} KCAL</Text>
                         <Button title = "DELETE" onPress = { () => {
                             Storage.subtractTotalCalory(this.parentName,this.recipeTotalCalory,food.Calory);
                             Storage.deleteFood(this.parentName,food.Name);
@@ -44,33 +64,50 @@ class Foods extends Component {
                     </TouchableOpacity>
                 </View>
                 )}
-                <Button title= "Add a food" onPress = { () => {
+            </ScrollView>
+            <Button title= "Add a food" onPress = { () => {
                     this.props.navigation.navigate('Scan', {
                     recipeName: this.parentName,
                     recipeTotalCalory: this.recipeTotalCalory
 
                 })}}/>
-            </ScrollView>
         </View>
         )}
 };
 
 const styles = StyleSheet.create({
     home:{
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: 'flex',
+        flexDirection:'column',
+        padding: 30,
+        backgroundColor:'#87CEFA',
+        height: '100%'
     },
     scroll:{
-        justifyContent: 'center',
-        alignItems: 'center',
+        display:'flex',
         paddingTop: 30,
-        paddingHorizontal: 20,
-        flexDirection: 'row',
+        backgroundColor:'white',
+        marginTop: 10,
+        borderRadius: 20,
     },
     headertext : {
-        fontSize : 30,
-    }
-    
+        display:'flex',
+        fontSize : 40,
+        marginTop: '20%',
+        textAlign: 'center',
+        fontWeight:'bold'
+    },
+    button: {
+        marginTop: '50%'
+    },
+    name: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10
+    },  
+    text: {
+        textAlign: 'center'
+    },
 })
 export default Foods
