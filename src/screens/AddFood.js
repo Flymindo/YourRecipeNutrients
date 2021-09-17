@@ -82,6 +82,7 @@ class AddFood extends Component {
         })
     }
 
+<<<<<<< HEAD
 
     // getServingSize () {
     //     return (
@@ -90,6 +91,14 @@ class AddFood extends Component {
     //         .then( response => response.json())
     //     )
     // }
+=======
+    getServingSize () {
+        return (
+            fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
+            .then( response => response.json())
+        )
+    }
+>>>>>>> d74509da6913480d49aaa7c6d6a6237e74995d3b
     
 
     render() {
