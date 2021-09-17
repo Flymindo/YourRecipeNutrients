@@ -4,6 +4,7 @@ import { RNCamera } from 'react-native-camera';
 import { Alert } from 'react-native';
 
 
+
 class Scan extends Component {
 
   constructor(props) {

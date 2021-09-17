@@ -32,6 +32,7 @@ const subtractTotalCalory = (recipeName, totalCalory, calory) =>{
 }
 
 const deleteRecipe = (recipeName) =>{
+    usersCollection.doc(recipeName).collection('Foods').delete();
     usersCollection.doc(recipeName).delete();
 }
 

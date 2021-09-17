@@ -5,6 +5,7 @@ import { Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 
+const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que';
 
 class AddFood extends Component {
     constructor(props) {
@@ -17,42 +18,68 @@ class AddFood extends Component {
           isLoading: true,
           dataSource: "",
           foodName: "",
-          calory: "",
-        //   servingAmount: 0,
-        //   yourAmount: 0,
+          servingCalory: 0,
+          calory: 0,
+          fdcId: 0,
+          servingSize: 0,
+          yourAmount: "",
         };
       };
 
-    getNutrients(response) {
-        var calory = ""
-        arr = response.foods[0].foodNutrients;
-        // console.log(arr);
-        for (var i=0; i< arr.length; i++){
-            if (arr[i].nutrientName == "Energy"){
-              calory = arr[i].value;
-            }
-        }
-        return calory;
+
+
+    calculateCalory(amount,servingSize,calory) {
+        // console.log(amount)
+        let x = parseInt(amount);
+        let y = servingSize;
+        let z = calory;
+
+        let totalCalory = (x / y) * z;
+        console.log(totalCalory);
+        this.setState({
+            calory: totalCalory
+        })
+        // return total;
+        
     }
+   
 
 
     componentDidMount(){
-        fetch(url, {
+        fetch(post_url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: '{ "query": ' + '\"' + this.barcodeCode.substring(1,this.barcodeCode.length) + '\"' + '}'
+            body: '{ "query": ' + '\"' + this.barcodeCode.substring(1,this.barcodeCode.length) + '\"' + ', "dataType": ["Branded"]}'
         })
         .then( (response) => response.json())
         .then ( (responsejson) => {
+            // console.log(responsejson)
             this.setState({
                 isLoading: false,
                 foodName: responsejson.foods[0].description,
-                calory : this.getNutrients(responsejson)
+                fdcId: responsejson.foods[0].fdcId
             })
+            
+            this.getServingSize().then( response => {
+                this.setState({
+                    servingSize: response.servingSize,
+                    servingCalory: response.labelNutrients.calories.value
+                })
+            })
+
         })
 
+
+    }
+
+    getServingSize () {
+        return (
+            // fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
+            fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que')
+            .then( response => response.json())
+        )
     }
     
 
@@ -62,18 +89,24 @@ class AddFood extends Component {
         <View style = {styles.AddFood}>
             <Text> Your Food Information Confirmation</Text>
             <Text> The Descrition of the food you scanned is {this.state.foodName}</Text>
-            <Text> Calory of the food (1 serving amount) is {this.state.calory} KCAL </Text>
-            {/* <TextInput 
-                style= {styles.input} 
-                keyboardType='number-pad'
-                onChangeText={(text)=> this.setState(text)} 
-                value= {this.state.servingAmount}/> */}
+            <Text> Calory of the food (1 serving size) is {this.state.servingCalory} KCAL </Text>
+            <Text> Serving Size is {this.state.servingSize} g </Text>
+            <TextInput 
+                style= {styles.input}
+                title = "Enter amount (g)" 
+                keyboardType='numeric'
+                onChangeText={ text => {
+                    this.setState({
+                    yourAmount: text
+                })
+                this.calculateCalory(text,this.state.servingSize,this.state.servingCalory)
+                }}
+                value= {this.state.yourAmount}/>
             <Button 
                 title= "Click to add your food" 
                 onPress = {() => {
-                    // console.log(this.state.servingAmount)
-                    Storage.addFoods(this.recipeName, this.state.foodName,this.state.calory)
-                    Storage.addTotalCalory(this.recipeName, this.recipeTotalCalory, this.state.calory)
+                    Storage.addFoods(this.recipeName, this.state.foodName,this.state.calory);
+                    Storage.addTotalCalory(this.recipeName, this.recipeTotalCalory, this.state.calory);
                     Alert.alert("Succefully Added");
                     this.props.navigation.navigate('Foods')}}/>
             <Button title= "Go Back to Home" onPress={ () => this.props.navigation.navigate('Home')}></Button>
