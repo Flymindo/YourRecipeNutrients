@@ -2,6 +2,10 @@ import React, {Component, useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList,SafeAreaView, Button,ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Storage } from '../service';
+import auth from '@react-native-firebase/auth';
+
+const uid = auth().currentUser.uid;
+
 
 class Foods extends Component {
     state = {
@@ -13,23 +17,15 @@ class Foods extends Component {
         this.parentName = this.props.route.params.recipeName;
         this.recipeTotalCalory = this.props.route.params.totalCalory;
         this.isMountedVal = 0;
-    //     this.data = 
-    //     firestore()
-    //     .collection('Recipes')
-    //     .doc(this.parentName)
-    //     .collection('Foods')
-    //     .onSnapshot(querySnapshot => {
-    //         let foods = [];
-    //         querySnapshot.forEach(documentSnapshot => {
-    //           foods.push( documentSnapshot.data() )
-    //         })
-    //         this.setState({foods});
-    //   })
+
     }
 
     componentDidMount(){
         this.isMountedVal = 1;
         firestore()
+        firestore()
+        .collection('Users')
+        .doc(uid)
         .collection('Recipes')
         .doc(this.parentName)
         .collection('Foods')
@@ -65,12 +61,22 @@ class Foods extends Component {
                 </View>
                 )}
             </ScrollView>
-            <Button title= "Add a food" onPress = { () => {
+            {/* <Button title= "Add a food" onPress = { () => {
                     this.props.navigation.navigate('Scan', {
                     recipeName: this.parentName,
                     recipeTotalCalory: this.recipeTotalCalory
 
-                })}}/>
+                })}}/> */}
+            <TouchableOpacity
+                style = {styles.button}
+                onPress = { () => {
+                this.props.navigation.navigate('Scan', {
+                recipeName: this.parentName,
+                recipeTotalCalory: this.recipeTotalCalory
+
+            })}}>
+                <Text style = {styles.buttonText}> Add a Food (Barcode Scan)</Text>
+            </TouchableOpacity>
         </View>
         )}
 };
@@ -97,9 +103,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight:'bold'
     },
-    button: {
-        marginTop: '50%'
-    },
     name: {
         textAlign: 'center',
         fontSize: 20,
@@ -109,5 +112,14 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center'
     },
+    button: {
+        display: 'flex', 
+        margin: "10%"
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20,
+    }
 })
 export default Foods

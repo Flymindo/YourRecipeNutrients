@@ -33,7 +33,8 @@ const AddRecipe = ({navigation}) => {
             <TextInput
             style={styles.input}
             onChangeText={setRecipeName}
-            value={recipeName}/>
+            value={recipeName}
+            placeholder = "Insert name of recipe"/>
             <Button 
             style={styles.input}
             title= "Save the Recipe"
@@ -44,7 +45,6 @@ const AddRecipe = ({navigation}) => {
 
             }}
             />  
-            {/* <Button title= 'Sign out' onPress = { () => Auth.signOut()}/> */}
 
         </View>
     )
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        marginBottom: '10%'
+        marginBottom: '10%',
+        backgroundColor: 'white'
     },
     recipeTitle: {
         fontSize: 40,
@@ -72,6 +73,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: '40%',
         marginBottom: '10%'
-    }
+    },
+    infoText: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10
+    },  
 })
 export default AddRecipe;

@@ -2,19 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button, Image} from 'react-native';
 import { Auth } from '../service';
 
+
 const Home = ({navigation}) => {
+
+
     return(
         <View style = {styles.home}>
             <Text style = {styles.title}>
                 Nutrient Calculator
             </Text>
             
-            <Button 
+            <TouchableOpacity
                 style = {styles.button}
-                title = "Your Recipes"
                 onPress = { () => navigation.navigate('Recipes')}>
-            </Button>
-            <Button style = {styles.button} title= 'Sign out' onPress = { () => Auth.signOut()}/>
+                    <Text style= {styles.buttonText}> Recipes </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {styles.button} onPress = { () => Auth.signOut()}>
+                <Text style= {styles.buttonText}> Sign Out</Text>
+            </TouchableOpacity>
 
         </View>
     )
@@ -24,8 +29,6 @@ const styles = StyleSheet.create({
     home:{
         display: 'flex',
         flexDirection: 'column',
-        // flex:1,
-        // alignItems: 'center',
         backgroundColor: '#87CEFA',
         height:'100%',
         paddingTop:"30%"
@@ -40,7 +43,16 @@ const styles = StyleSheet.create({
         color: 'white', },
     button: {
         display: 'flex', 
-        color: 'white',
+        margin: "5%",
+        backgroundColor: 'white',
+        width: '30%',
+        alignContent: 'center',
+        alignSelf: 'center',
+        borderRadius: 20,
+    },
+    buttonText: {
+        textAlign: 'center',
+        fontSize: 15,
     }
 
 })

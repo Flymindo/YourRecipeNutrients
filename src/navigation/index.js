@@ -1,5 +1,3 @@
-
-
 import React, {useState, useEffect} from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,7 +17,6 @@ const AppContainer =  () =>  {
     // Handle user state changes
     function onAuthStateChanged(user) {
       setUser(user);
-      console.log(user);
       if (initializing) setInitializing(false);
     }
   
@@ -39,7 +36,6 @@ const AppContainer =  () =>  {
     return (
       <NavigationContainer>
           {user ? <AppNavigator/> : <AuthNavigator/>}
-          {/* <AppNavigator/> */}
       </NavigationContainer>
     );
 

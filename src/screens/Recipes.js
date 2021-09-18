@@ -2,6 +2,10 @@ import React, {Component, useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList,SafeAreaView, Button,ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Storage } from '../service';
+import auth from '@react-native-firebase/auth';
+
+const uid = auth().currentUser.uid;
+
 
 class Recipes extends Component {
     state = {
@@ -10,20 +14,12 @@ class Recipes extends Component {
     constructor(props) {
         super(props);
         this.isMountedVal = 0;
-    //     this.data = 
-    //     firestore()
-    //     .collection('Recipes')
-    //     .onSnapshot(querySnapshot => {
-    //         let recipes = [];
-    //         querySnapshot.forEach(documentSnapshot => {
-    //           recipes.push( documentSnapshot.data() )
-    //         })
-    //         this.setState({recipes});
-    //   })
     }
     componentDidMount(){
         this.isMountedVal = 1;
         firestore()
+        .collection('Users')
+        .doc(uid)
         .collection('Recipes')
         .onSnapshot(querySnapshot => {
             let recipes = [];
@@ -60,10 +56,12 @@ render() {
             </View>
             )}
         </ScrollView>
-        <Button 
-        // style = {styles.button}
-        title= "Add a recipe" 
-        onPress = { () => this.props.navigation.navigate("AddRecipe")}/>
+        <TouchableOpacity
+        style = {styles.button}
+        // title= "Add a recipe" 
+        onPress = { () => this.props.navigation.navigate("AddRecipe")}>
+            <Text style = {styles.buttonText}> Add a Recipe </Text>
+        </TouchableOpacity>
     </View>
     )}
 };
@@ -101,7 +99,12 @@ headertext : {
 },
 button: {
     display: 'flex', 
+    margin: "10%"
+},
+buttonText: {
     color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
 }
 })
 export default Recipes;

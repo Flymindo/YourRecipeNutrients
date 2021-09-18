@@ -1,7 +1,16 @@
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
-const usersCollection = firestore().collection('Recipes');
 
+const user = auth().currentUser;
+const usersCollection = firestore().collection('Users').doc(user.uid).collection('Recipes')
+
+const addUser = (user) =>{
+    firestore().collection('Users').doc(user.uid).set({
+        Name: user.displayName,
+        Email: user.email,
+    })
+}
 
 const addRecipes = (recipeName) =>{
     usersCollection.doc(recipeName).set({
@@ -41,6 +50,7 @@ const deleteFood = (recipeName,foodName) =>{
 
 
 const Storage = {
+    addUser,
     addRecipes,
     addFoods,
     addTotalCalory,
