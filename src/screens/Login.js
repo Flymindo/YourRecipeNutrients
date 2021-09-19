@@ -1,14 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 import { Auth } from '../service';
-import { Storage } from '../service';
 
 
 
 
 const Login = () => {
+
 
     return(
         <View style = {styles.login}>
@@ -19,9 +18,8 @@ const Login = () => {
             color={GoogleSigninButton.Color.Dark}
             onPress={() => {
                 Auth.googleLogin().then(() => {
-                    const user = auth().currentUser;
-                    Storage.addUser(user)})
-            }}
+                    Alert.alert("Logged In !")})
+                }}
             />
 
         </View>

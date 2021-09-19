@@ -7,26 +7,6 @@ import { Alert } from 'react-native';
 const AddRecipe = ({navigation}) => {
     const [recipeName, setRecipeName] = React.useState("")
 
-    // return(
-    //     <View style = {styles.home}>
-    //         <Text>Your Recipes</Text>
-    //         <TextInput
-    //         style={styles.input}
-    //         onChangeText={setRecipeName}
-    //         value={recipeName}/>
-    //         <Button 
-    //         title= "Save the Recipe"
-    //         onPress = {() => {
-    //             Storage.addRecipes(recipeName);
-    //             Alert.alert("Succefully Added");
-    //             navigation.goBack();
-
-    //         }}
-    //         />  
-    //         {/* <Button title= 'Sign out' onPress = { () => Auth.signOut()}/> */}
-
-    //     </View>
-    // )
     return(
         <View style = {styles.home}>
             <Text style={styles.recipeTitle}>Your Recipes</Text>

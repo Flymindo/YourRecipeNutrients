@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import { Storage } from '../service';
 import { Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 
 
 const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key={YOUR_API_KEY}';
@@ -36,7 +35,7 @@ class AddFood extends Component {
         let z = calory;
 
         let totalCalory = (x / y) * z;
-        console.log(totalCalory);
+        // console.log(totalCalory);
         this.setState({
             calory: totalCalory
         })
@@ -87,8 +86,7 @@ class AddFood extends Component {
     render() {
         return(
         <View style = {styles.home}>
-            <Text style = {styles.header}>Confirmation</Text>
-            <Text style = {styles.headertext} > {this.state.foodName}</Text>
+            <Text style = {styles.header} > {this.state.foodName}</Text>
             {this.state.isLoading ? 
                 <Text style = {styles.infoText}> Loading </Text> :
                 <View style = {styles.infoBox}>
