@@ -1,26 +1,26 @@
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
 
-const user = auth().currentUser;
-const usersCollection = firestore().collection('Users').doc(user.uid).collection('Recipes')
+let currentUserId;;
+
 
 const addUser = (user) =>{
     firestore().collection('Users').doc(user.uid).set({
         Name: user.displayName,
         Email: user.email,
     })
+    currentUserId = user.uid;
 }
 
 const addRecipes = (recipeName) =>{
-    usersCollection.doc(recipeName).set({
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).set({
         Name : recipeName,
         TotalCalory: 0
     });
 }
 
 const addFoods = (recipeName, foodName, calory) =>{
-    usersCollection.doc(recipeName).collection('Foods').doc(foodName).set({
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).collection('Foods').doc(foodName).set({
         Name: foodName,
         Calory: calory
     });
@@ -28,24 +28,24 @@ const addFoods = (recipeName, foodName, calory) =>{
 
 const addTotalCalory = (recipeName, totalCalory, calory) =>{
     total = totalCalory + calory;
-    usersCollection.doc(recipeName).update({
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).update({
         TotalCalory: total
     })
 }
 
 const subtractTotalCalory = (recipeName, totalCalory, calory) =>{
     total = totalCalory - calory;
-    usersCollection.doc(recipeName).update({
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).update({
         TotalCalory: total
     })
 }
 
 const deleteRecipe = (recipeName) =>{
-    usersCollection.doc(recipeName).delete();
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).delete();
 }
 
 const deleteFood = (recipeName,foodName) =>{
-    usersCollection.doc(recipeName).collection('Foods').doc(foodName).delete();
+    firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).collection('Foods').doc(foodName).delete();
 }
 
 

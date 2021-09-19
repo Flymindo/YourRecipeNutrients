@@ -1,12 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {Home, Login, Recipes, Scan, AddFood, AddRecipe,Foods} from '../screens';
-// import Login  from '../screens';
-import {Auth} from "../service"
+import auth from '@react-native-firebase/auth';
+import { Storage } from '../service';
 
 const Stack = createStackNavigator();
 
+
 const AppNavigator = () => {
+    const user = auth().currentUser;
+    Storage.addUser(user);
     return(
         <Stack.Navigator
             screenOptions = {{

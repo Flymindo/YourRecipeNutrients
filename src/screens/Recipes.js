@@ -1,15 +1,13 @@
-import React, {Component, useState,useEffect} from 'react';
+import React, {Component} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList,SafeAreaView, Button,ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Storage } from '../service';
 import auth from '@react-native-firebase/auth';
 
-const uid = auth().currentUser.uid;
-
 
 class Recipes extends Component {
     state = {
-        recipes: []
+        recipes: [],
     }
     constructor(props) {
         super(props);
@@ -17,6 +15,7 @@ class Recipes extends Component {
     }
     componentDidMount(){
         this.isMountedVal = 1;
+        const uid = auth().currentUser.uid;
         firestore()
         .collection('Users')
         .doc(uid)

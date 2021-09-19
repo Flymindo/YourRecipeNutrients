@@ -4,7 +4,6 @@ import firestore from '@react-native-firebase/firestore';
 import { Storage } from '../service';
 import auth from '@react-native-firebase/auth';
 
-const uid = auth().currentUser.uid;
 
 
 class Foods extends Component {
@@ -22,7 +21,7 @@ class Foods extends Component {
 
     componentDidMount(){
         this.isMountedVal = 1;
-        firestore()
+        const uid =auth().currentUser.uid;
         firestore()
         .collection('Users')
         .doc(uid)

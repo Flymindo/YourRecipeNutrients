@@ -3,10 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import { Storage } from '../service';
 import { Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 
 
-const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que';
+const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key={YOUR_API_KEY}';
 
 class AddFood extends Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class AddFood extends Component {
         let z = calory;
 
         let totalCalory = (x / y) * z;
-        console.log(totalCalory);
+        // console.log(totalCalory);
         this.setState({
             calory: totalCalory
         })
@@ -66,7 +65,7 @@ class AddFood extends Component {
                     foodName: responsejson.foods[0].description,
                     fdcId: responsejson.foods[0].fdcId
                 })
-                fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key=1STbT8Zsp6d9CcLirJjDRE9UoS6aklojen8h5que')
+                fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
                 .then( response => response.json())
                 .then( response => {
                     this.setState({
@@ -87,8 +86,7 @@ class AddFood extends Component {
     render() {
         return(
         <View style = {styles.home}>
-            <Text style = {styles.header}>Confirmation</Text>
-            <Text style = {styles.headertext} > {this.state.foodName}</Text>
+            <Text style = {styles.header} > {this.state.foodName}</Text>
             {this.state.isLoading ? 
                 <Text style = {styles.infoText}> Loading </Text> :
                 <View style = {styles.infoBox}>
