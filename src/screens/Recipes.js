@@ -44,10 +44,16 @@ render() {
             <View style = {styles.scroll} key={index}> 
                 <TouchableOpacity onPress = { () => this.props.navigation.navigate("Foods",{
                     recipeName: recipe.Name,
-                    totalCalory: recipe.TotalCalory
+                    totalCalory: recipe.TotalCalory,
+                    totalProtein: recipe.TotalProtein,
+                    totalCarboHydrate: recipe.TotalCarboHydrate,
+                    totalFat: recipe.TotalFat,
                 })} >
                     <Text style={styles.name}>{recipe.Name}</Text>
-                    <Text style={styles.text}>Total Calorie is {Math.floor(recipe.TotalCalory,2)} KCAL</Text>
+                    <Text style={styles.text}> {Math.floor(recipe.TotalCalory,2)} KCAL</Text>
+                    <Text style={styles.text}> CarboHydrate: {Math.floor(recipe.TotalCarboHydrate,2)} g</Text>
+                    <Text style={styles.text}> Protein: {Math.floor(recipe.TotalProtein,2)} g</Text>
+                    <Text style={styles.text}> Fat: {Math.floor(recipe.TotalFat,2)} g</Text>
                     <Button 
                     title= "DELETE" 
                     onPress = { () => Storage.deleteRecipe(recipe.Name)}/>

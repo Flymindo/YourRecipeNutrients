@@ -11,7 +11,10 @@ class Scan extends Component {
     super(props);
     this.camera = null;
     this.recipeName = this.props.route.params.recipeName;
-    this.recipeTotalCalory = this.props.route.params.recipeTotalCalory
+    this.recipeTotalCalory = this.props.route.params.recipeTotalCalory;
+    this.recipeTotalProtein = this.props.route.params.recipeTotalProtein;
+    this.recipeTotalFat = this.props.route.params.recipeTotalFat;
+    this.recipeTotalCarboHydrate = this.props.route.params.recipeTotalCarboHydrate;
     // this.barcodeCodes = [];
     this.barcodeCode = "";
 
@@ -34,7 +37,7 @@ class Scan extends Component {
 
         // console.log("this is barcodeCode")
         // console.log(this.barcodeCode)
-        Alert.alert('The barcode is scanned. Please press the button "Enter Barcode');
+        Alert.alert('The barcode is scanned. Please press Submit');
 
         
         
@@ -92,11 +95,14 @@ class Scan extends Component {
               this.props.navigation.navigate('AddFood',{
                 barcode : this.barcodeCode,
                 recipeName: this.recipeName,
-                recipeTotalCalory: this.recipeTotalCalory
+                recipeTotalCalory: this.recipeTotalCalory,
+                recipeTotalCarboHydrate: this.recipeTotalCarboHydrate,
+                recipeTotalProtein : this.recipeTotalProtein,
+                recipeTotalFat: this.recipeTotalFat,
               });
               }}
             style={styles.enterBarcodeManualButton}
-            title="Enter Barcode"
+            title="Submit"
            />
 	</View>
       </View>

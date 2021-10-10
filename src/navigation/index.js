@@ -6,6 +6,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
+import BottomNavigator from './BottomNavigator';
 import { Storage } from '../service';
 
 
@@ -37,7 +38,10 @@ const AppContainer =  () =>  {
   
     return (
       <NavigationContainer>
-          {user ? <AppNavigator/> : <AuthNavigator/>}
+          {/* {user ? <AppNavigator/> : <AuthNavigator/>}
+          */}
+        {user ? <BottomNavigator/> : <AuthNavigator/>}
+
       </NavigationContainer>
     );
 

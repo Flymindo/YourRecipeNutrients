@@ -792,6 +792,8 @@ PODS:
     - React-cxxreact (= 0.65.1)
     - React-jsi (= 0.65.1)
     - React-perflogger (= 0.65.1)
+  - RNCCheckbox (0.5.8):
+    - React-Core
   - RNFBApp (12.8.0):
     - Firebase/CoreOnly (= 8.7.0)
     - React-Core
@@ -872,6 +874,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
@@ -977,6 +980,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNCCheckbox:
+    :path: "../node_modules/@react-native-community/checkbox"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -1057,6 +1062,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 92d41c2442e5328cc4d342cd7f78e5876b68bae5
   React-runtimeexecutor: 85187f19dd9c47a7c102f9994f9d14e4dc2110de
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
+  RNCCheckbox: 6bd119c26c6eb8264a29d59ff66cb70a14de3349
   RNFBApp: b97d6654509a5852d49f0abf93be76b300fd2e2c
   RNFBAuth: 07fd836f31fe09d465c22476a052766251af1c49
   RNFBFirestore: a1eeb9f7b0f05f87f41cdff34aba1c6a780814e6

@@ -3,9 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import { Storage } from '../service';
 import { Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import api_key from '../../api';
 
 
-const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key={YOUR_API_KEY}';
+const post_url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=' + api_key;
 
 class AddFood extends Component {
     constructor(props) {
@@ -13,32 +14,46 @@ class AddFood extends Component {
         this.barcodeCode = this.props.route.params.barcode;
         this.recipeName = this.props.route.params.recipeName;
         this.recipeTotalCalory = this.props.route.params.recipeTotalCalory;
+        this.recipeTotalProtein = this.props.route.params.recipeTotalProtein;
+        this.recipeTotalFat = this.props.route.params.recipeTotalFat;
+        this.recipeTotalCarboHydrate = this.props.route.params.recipeTotalCarboHydrate;
 
         this.state = {
           isLoading: true,
           dataSource: "",
           foodName: "",
           servingCalory: 0,
+          servingProtein: 0,
+          servingFat: 0,
+          servingCarboHydrate:0,
           calory: 0,
+          protein: 0,
+          fat : 0,
+          carboHydrate: 0,
           fdcId: 0,
           servingSize: 0,
           yourAmount: "",
         };
       };
 
-
-
-    calculateCalory(amount,servingSize,calory) {
+    calculateNutrients(amount,servingSize) {
         // console.log(amount)
         let x = parseInt(amount);
         let y = servingSize;
-        let z = calory;
 
-        let totalCalory = (x / y) * z;
+        let totalProtein = (x / y) * this.state.servingProtein;
+        let totalCalory = (x / y) * this.state.servingCalory;
+        let totalFat = (x / y) * this.state.servingFat;
+        let totalCarboHydrate = (x / y) * this.state.servingCarboHydrate;
+        // console.log(this.state.servingProtein);
         // console.log(totalCalory);
         this.setState({
+            protein: totalProtein,
+            fat: totalFat,
+            carboHydrate: totalCarboHydrate,
             calory: totalCalory
         })
+        console.log(this.recipeTotalProtein);
         // return total;
         
     }
@@ -65,13 +80,17 @@ class AddFood extends Component {
                     foodName: responsejson.foods[0].description,
                     fdcId: responsejson.foods[0].fdcId
                 })
-                fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key={YOUR_API_KEY}')
+                fetch('https://api.nal.usda.gov/fdc/v1/food/' + this.state.fdcId + '?api_key=' + api_key)
                 .then( response => response.json())
                 .then( response => {
+                    console.log(response.labelNutrients);
                     this.setState({
                         isLoading: false,
                         servingSize: response.servingSize,
-                        servingCalory: response.labelNutrients.calories.value
+                        servingCalory: response.labelNutrients.calories.value,
+                        servingProtein: response.labelNutrients.protein.value,
+                        servingFat : response.labelNutrients.fat.value,
+                        servingCarboHydrate: response.labelNutrients.carbohydrates.value
                     })
                 })
             }
@@ -101,16 +120,20 @@ class AddFood extends Component {
                     this.setState({
                     yourAmount: text
                 })
-                this.calculateCalory(text,this.state.servingSize,this.state.servingCalory)
+                // this.calculateCalory(text,this.state.servingSize,this.state.servingCalory)
+                this.calculateNutrients(text,this.state.servingSize);
                 }}
+                
                 placeholder = "Insert amount of food (g)"
                 placeholderTextColor = 'white'
                 value= {this.state.yourAmount}/>
             <Button 
                 title= "Click to add your food" 
                 onPress = {() => {
-                    Storage.addFoods(this.recipeName, this.state.foodName,this.state.calory);
-                    Storage.addTotalCalory(this.recipeName, this.recipeTotalCalory, this.state.calory);
+                    Storage.addFoods(this.recipeName, this.state.foodName,this.state.calory,this.state.carboHydrate, this.state.protein, this.state.fat);
+                    Storage.addTotalNutrients(this.recipeName, this.recipeTotalCalory, this.state.calory,
+                        this.recipeTotalCarboHydrate, this.state.carboHydrate,
+                        this.recipeTotalProtein, this.state.protein,this.recipeTotalFat, this.state.fat);
                     Alert.alert("Succefully Added");
                     this.props.navigation.navigate('Foods')}}/>
             <Button title= "Go Back to Home" onPress={ () => this.props.navigation.navigate('Home')}></Button>
@@ -144,7 +167,7 @@ const styles = StyleSheet.create({
     },
     header : {
         display:'flex',
-        fontSize : 40,
+        fontSize : 30,
         marginTop: '20%',
         textAlign: 'center',
         fontWeight:'bold',

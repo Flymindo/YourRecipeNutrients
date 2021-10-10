@@ -15,21 +15,33 @@ const addUser = (user) =>{
 const addRecipes = (recipeName) =>{
     firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).set({
         Name : recipeName,
-        TotalCalory: 0
+        TotalCalory: 0,
+        TotalCarboHydrate: 0,
+        TotalProtein: 0,
+        TotalFat : 0,
     });
 }
 
-const addFoods = (recipeName, foodName, calory) =>{
+const addFoods = (recipeName, foodName, calory,carboHydrate,protein,fat) =>{
     firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).collection('Foods').doc(foodName).set({
         Name: foodName,
-        Calory: calory
+        Calory: calory,
+        CarboHydrate : carboHydrate,
+        Protein: protein,
+        Fat: fat,
     });
 }
 
-const addTotalCalory = (recipeName, totalCalory, calory) =>{
-    total = totalCalory + calory;
+const addTotalNutrients = (recipeName, totalCalory, calory, totalCarboHydrate, carboHydrate, totalProtein, protein,totalFat, fat) =>{
+    totalCal = totalCalory + calory;
+    totalPro = totalProtein + protein;
+    totalFat = totalFat + fat;
+    totalCarbo = totalCarboHydrate + carboHydrate;
     firestore().collection('Users').doc(currentUserId).collection('Recipes').doc(recipeName).update({
-        TotalCalory: total
+        TotalCalory: totalCal,
+        TotalProtein: totalPro,
+        TotalFat: totalFat,
+        TotalCarboHydrate: totalCarbo,
     })
 }
 
@@ -53,7 +65,7 @@ const Storage = {
     addUser,
     addRecipes,
     addFoods,
-    addTotalCalory,
+    addTotalNutrients,
     subtractTotalCalory,
     deleteFood,
     deleteRecipe

@@ -1,0 +1,1 @@
+// planning to add bottom navigator ( Home and Setting)

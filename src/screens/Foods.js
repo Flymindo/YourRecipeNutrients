@@ -15,6 +15,9 @@ class Foods extends Component {
         super(props);
         this.parentName = this.props.route.params.recipeName;
         this.recipeTotalCalory = this.props.route.params.totalCalory;
+        this.recipeTotalProtein = this.props.route.params.totalProtein;
+        this.recipeTotalFat = this.props.route.params.totalFat;
+        this.recipeTotalCarboHydrate = this.props.route.params.totalCarboHydrate;
         this.isMountedVal = 0;
 
     }
@@ -51,7 +54,10 @@ class Foods extends Component {
                 <View style= {styles.scroll} key={index}> 
                     <TouchableOpacity>
                         <Text style = {styles.name}>{food.Name}</Text>
-                        <Text style = {styles.text}>Calory is {food.Calory} KCAL</Text>
+                        <Text style = {styles.text}>{food.Calory} KCAL</Text>
+                        <Text style = {styles.text}>CarboHydrate: {Math.floor(food.CarboHydrate,2)} g</Text>
+                        <Text style = {styles.text}>Protein: {Math.floor(food.Protein,2)} g</Text>
+                        <Text style = {styles.text}>Fat: {Math.floor(food.Fat,2)} g</Text>
                         <Button title = "DELETE" onPress = { () => {
                             Storage.subtractTotalCalory(this.parentName,this.recipeTotalCalory,food.Calory);
                             Storage.deleteFood(this.parentName,food.Name);
@@ -71,7 +77,10 @@ class Foods extends Component {
                 onPress = { () => {
                 this.props.navigation.navigate('Scan', {
                 recipeName: this.parentName,
-                recipeTotalCalory: this.recipeTotalCalory
+                recipeTotalCalory: this.recipeTotalCalory,
+                recipeTotalCarboHydrate: this.recipeTotalCarboHydrate,
+                recipeTotalProtein: this.recipeTotalProtein,
+                recipeTotalFat: this.recipeTotalFat,
 
             })}}>
                 <Text style = {styles.buttonText}> Add a Food (Barcode Scan)</Text>

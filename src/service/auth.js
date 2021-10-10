@@ -40,7 +40,7 @@ const signIn = (email,password) => {
     .catch( error => Alert.alert(error.code, error.message));
 }
 
-const forgetPassword = () => {
+const forgetPassword = (email) => {
     if (!email){
         Alert.alert("Please enter your email")
     }

@@ -5,3 +5,6 @@ export {default as Scan} from "./Scan";
 export {default as AddFood} from "./AddFood";
 export {default as AddRecipe} from "./AddRecipe";
 export {default as Foods} from "./Foods";
+export {default as SignUp} from "./SignUp"
+export {default as ForgetPassword} from "./ForgetPassword";
+export {default as Profile} from "./Profile";
