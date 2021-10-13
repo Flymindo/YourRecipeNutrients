@@ -7,7 +7,7 @@ as a user adds foods to recipies by Scanning barcode of the food or searching on
 
 The app was designed to be able to:
 
-Authenticate users via Gmail
+Authenticate users via Gmail or firebase Auth
 
 - Scan barcodes or search name of food items
 
