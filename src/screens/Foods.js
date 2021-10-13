@@ -85,6 +85,13 @@ class Foods extends Component {
             })}}>
                 <Text style = {styles.buttonText}> Add a Food (Barcode Scan)</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style = {styles.button}
+                onPress = { () => {
+                    this.props.navigation.navigate('SearchByName')
+                }}>
+                    <Text style = {styles.buttonText}> Add by searching the name</Text>
+            </TouchableOpacity>
         </View>
         )}
 };

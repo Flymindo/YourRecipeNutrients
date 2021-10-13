@@ -8,3 +8,4 @@ export {default as Foods} from "./Foods";
 export {default as SignUp} from "./SignUp"
 export {default as ForgetPassword} from "./ForgetPassword";
 export {default as Profile} from "./Profile";
+export {default as SearchByName} from "./SearchByName";
